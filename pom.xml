@@ -74,12 +74,10 @@
 							<!-- Manage presentation compiler. -->
 							<goal>eclipse-prescomp</goal>
 							<!-- Add compilation sources. -->
-							<goal>register-macro</goal>
 							<goal>register-main</goal>
 							<goal>register-test</goal>
 
 							<!-- Compile sources. -->
-							<goal>compile-macro</goal>
 							<goal>compile-main</goal>
 							<goal>compile-test</goal>
 
