@@ -100,5 +100,11 @@
 			<artifactId>scala-library</artifactId>
 			<version>${version.scala.release}</version>
 		</dependency>
+		 <dependency>
+            <groupId>org.scala-js</groupId>
+            <artifactId>scalajs-library_${version.scala.epoch}</artifactId>
+            <version>${version.scalajs.release}</version>
+            <scope>provided</scope>
+        </dependency>
 	</dependencies>
 </project>
