@@ -57,6 +57,9 @@
 							<version>${version.scalajs.release}</version>
 						</dependency>
 					</definePluginList>
+					<linkerMainInitializerList>
+						<initializer>com.github.m50d.plusminuszero.PlusMinusZero.main(build=${project.artifactId},stamp=${maven.build.timestamp})</initializer>
+					</linkerMainInitializerList>
 				</configuration>
 				<executions>
 					<execution>
@@ -100,11 +103,11 @@
 			<artifactId>scala-library</artifactId>
 			<version>${version.scala.release}</version>
 		</dependency>
-		 <dependency>
-            <groupId>org.scala-js</groupId>
-            <artifactId>scalajs-library_${version.scala.epoch}</artifactId>
-            <version>${version.scalajs.release}</version>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.scala-js</groupId>
+			<artifactId>scalajs-library_${version.scala.epoch}</artifactId>
+			<version>${version.scalajs.release}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>
