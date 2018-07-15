@@ -68,6 +68,7 @@
 					<linkerMainInitializerList>
 						<initializer>com.github.m50d.plusminuszero.PlusMinusZero.main(build=${project.artifactId},stamp=${maven.build.timestamp})</initializer>
 					</linkerMainInitializerList>
+					<zincVerifyVersion>false</zincVerifyVersion>
 				</configuration>
 				<executions>
 					<execution>
@@ -102,6 +103,12 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 	<dependencies>
 		<dependency>
@@ -115,12 +122,12 @@
 			<version>${version.scalajs.release}</version>
 			<scope>provided</scope>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.scala-js</groupId> -->
-<!-- 			<artifactId>scalajs-dom_${version.scalajs.library}</artifactId> -->
-<!-- 			<version>0.9.4</version> -->
-<!-- 			<scope>provided</scope> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.scala-js</groupId> -->
+		<!-- <artifactId>scalajs-dom_${version.scalajs.library}</artifactId> -->
+		<!-- <version>0.9.4</version> -->
+		<!-- <scope>provided</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.github.jcouyang</groupId>
 			<artifactId>owlet</artifactId>
