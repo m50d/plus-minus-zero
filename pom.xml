@@ -1,0 +1,155 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.m50d</groupId>
+	<artifactId>plus-minus-zero</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<properties>
+		<scala.version>2.12</scala.version>
+		<scalajs.version>1.0.0-M5</scalajs.version>
+		<sjs.lib>lib.js</sjs.lib>
+		<sjs.run>run.js</sjs.run>
+		<!-- -->
+		<sjs.phase>prepare-package</sjs.phase>
+		<sjs.target>${project.build.directory}/scala-js</sjs.target>
+		<!-- -->
+		<sjs.main.classes>${project.build.directory}/classes</sjs.main.classes>
+		<sjs.test.classes>${project.build.directory}/test-classes</sjs.test.classes>
+		<!-- -->
+		<sjs.arg.options>--debug --fastOpt --sourceMap</sjs.arg.options>
+		<sjs.arg.runtime>--output ${sjs.target}/${sjs.run}</sjs.arg.runtime>
+		<sjs.arg.library>--jsoutput ${sjs.target}/${sjs.lib}</sjs.arg.library>
+		<sjs.arg.classpath><![CDATA[${sjs.main.classes} ${sjs.test.classes} ${sjs.dependency}]]></sjs.arg.classpath>
+		<!-- -->
+		<sjs.arguments><![CDATA[${sjs.arg.options} ${sjs.arg.library} ${sjs.arg.runtime} ${sjs.arg.classpath}]]></sjs.arguments>
+	</properties>
+	<!-- Scala/JS libraries use scope=provided. -->
+	<dependencies>
+		<dependency>
+			<groupId>org.scala-js</groupId>
+			<artifactId>scalajs-library_${scala.version}</artifactId>
+			<version>${scalajs.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+
+			<!-- Provide dependency class path. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>build-path</id>
+						<phase>${sjs.phase}</phase>
+						<goals>
+							<goal>build-classpath</goal>
+						</goals>
+						<configuration>
+							<includeScope>provided</includeScope>
+							<outputProperty>sjs.dependency</outputProperty>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Process dependency class path. -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.codehaus.mojo</groupId> -->
+<!-- 				<artifactId>build-helper-maven-plugin</artifactId> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>filter-path</id> -->
+<!-- 						<phase>${sjs.phase}</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>regex-property</goal> -->
+<!-- 						</goals> -->
+<!-- 						<configuration> -->
+<!-- 							<name>sjs.dependency</name> -->
+<!-- 							<value>${sjs.dependency}</value> -->
+<!-- 							<regex>${path.separator}</regex> -->
+<!-- 							<replacement xml:space="preserve"><![CDATA[ ]]></replacement> -->
+<!-- 						</configuration> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
+
+			<!-- Provide Scala/JS build folder. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>make-dir</id>
+						<phase>${sjs.phase}</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<mkdir dir="${sjs.target}" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Generate Scala/JS runtime and library scripts. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>org.scala-js</groupId>
+						<artifactId>scalajs-cli_${scala.version}</artifactId>
+						<version>${scalajs.version}</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>make-js</id>
+						<phase>${sjs.phase}</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<cleanupDaemonThreads>true</cleanupDaemonThreads>
+					<daemonThreadJoinTimeout>100</daemonThreadJoinTimeout>
+					<includePluginDependencies>true</includePluginDependencies>
+					<includeProjectDependencies>false</includeProjectDependencies>
+					<mainClass>org.scalajs.cli.Scalajsld</mainClass>
+					<commandlineArgs>${sjs.arguments}</commandlineArgs>
+				</configuration>
+			</plugin>
+
+			<!-- Copy generated resources. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-js</id>
+						<phase>${sjs.phase}</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${sjs.main.classes}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${sjs.target}</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
