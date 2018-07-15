@@ -10,8 +10,16 @@
 		<version.scala.plugin.macro>2.1.1</version.scala.plugin.macro>
 		<version.scala.release>2.12.6</version.scala.release>
 		<version.scala.zinc>1.1.7</version.scala.zinc>
+		<version.scalajs.epoch>0.6</version.scalajs.epoch>
 		<version.scalajs.release>0.6.24</version.scalajs.release>
+		<version.scalajs.library>sjs${version.scalajs.epoch}_${version.scala.epoch}</version.scalajs.library>
 	</properties>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 	<build>
 		<plugins>
 			<!-- Disable default compiler. -->
@@ -105,6 +113,18 @@
 			<groupId>org.scala-js</groupId>
 			<artifactId>scalajs-library_${version.scala.epoch}</artifactId>
 			<version>${version.scalajs.release}</version>
+			<scope>provided</scope>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.scala-js</groupId> -->
+<!-- 			<artifactId>scalajs-dom_${version.scalajs.library}</artifactId> -->
+<!-- 			<version>0.9.4</version> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>com.github.jcouyang</groupId>
+			<artifactId>owlet</artifactId>
+			<version>0.1.2</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
