@@ -1,5 +1,6 @@
 package com.github.m50d.plusminuszero
 
+import cats.instances.vector._
 import cats.syntax.apply._
 import cats.syntax.flatMap._
 import cats.syntax.functor._
@@ -12,12 +13,12 @@ import DOM._
 object PlusMinusZero {
   @JSExport
   def main(args: Array[String]): Unit = {
-//    for {
-//      nWeightedScores <- number("nWeightedScores", 0)
-//      scoreEntries <- (1 to nWeightedScores).traverse {
-//        i => number(s"weightedScore$i", 0)
-//      }
-//    } yield {}
+    for {
+      nWeightedScores <- numberSlider("nWeightedScores", 5, 10, 5).map(_.toInt)
+      scoreEntries <- (1 to nWeightedScores).toVector.traverse {
+        i => number(s"weightedScore$i", 0)
+      }
+    } yield {}
    
     val a1 = number("a1", 1)
     val a2 = number("a2", 2)
