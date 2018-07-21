@@ -8,23 +8,38 @@ import cats.syntax.traverse._
 import scala.scalajs.js.annotation._
 import us.oyanglul.owlet._
 import DOM._
+import monix.reactive.subjects.Var
+import monix.execution.Scheduler.Implicits.global
+import Function.const
+
+case class TournamentResult(weight: Double, points: Int)
+
+object TournamentResult {
+  def weight: Owlet[Double] = label(number("weight", 0), "Weight")
+  def points: Owlet[Int] = label(number("points", 0), "Points").map(_.toInt)
+  def tournamentResult: Owlet[TournamentResult] =
+    (weight, points).mapN(apply)
+}
 
 @JSExportTopLevel("plusMinusZero.PlusMinusZero")
 object PlusMinusZero {
   @JSExport
   def main(args: Array[String]): Unit = {
-    for {
-      nWeightedScores <- numberSlider("nWeightedScores", 5, 10, 5).map(_.toInt)
-      scoreEntries <- (1 to nWeightedScores).toVector.traverse {
-        i => number(s"weightedScore$i", 0)
-      }
-    } yield {}
-   
-    val a1 = number("a1", 1)
-    val a2 = number("a2", 2)
-    val a3 = number("a3", 3)
-    val sum = fx((a: List[Double]) => a.sum, List(a1, a2, a3))
-    val product = fx(((a: List[Double]) => a.product), List(a1, a2, a3))
-    render(a1 *> a2 *> a3 *> sum *> product, "#app")
+    val a2 = Var(identity): Var[List[Owlet[String]] => List[Owlet[String]]]
+    val actions = Var(identity): Var[List[Owlet[TournamentResult]] => List[Owlet[TournamentResult]]]
+    val listOfTodos =
+      actions.scan(List[Owlet[TournamentResult]]())((owlets, f) => f(owlets))
+
+    val notAddItem = const(Nil) _
+    val addItem = (tr: TournamentResult) => List(string("todo-item", tr.toString).map(_ => tr))
+
+    val newTodo = div(TournamentResult.tournamentResult, Var(Seq("header")))
+    val addNewTodo =
+      (button("add", notAddItem, addItem) <*> newTodo)
+        .map(t => actions := (a => (a ) ::: t))
+        
+
+    val todoUl: Owlet[List[TournamentResult]] = removableList(listOfTodos, a2)
+    render(addNewTodo *> todoUl, "#app")
   }
 }

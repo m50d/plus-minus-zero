@@ -129,6 +129,12 @@
 		<!-- <scope>provided</scope> -->
 		<!-- </dependency> -->
 		<dependency>
+			<groupId>com.lihaoyi</groupId>
+			<artifactId>scalatags_${version.scala.epoch}</artifactId>
+			<version>0.6.7</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.github.jcouyang</groupId>
 			<artifactId>owlet</artifactId>
 			<version>0.1.2</version>
