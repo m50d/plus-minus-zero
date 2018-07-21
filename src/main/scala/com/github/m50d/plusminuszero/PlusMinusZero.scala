@@ -1,6 +1,9 @@
 package com.github.m50d.plusminuszero
 
 import cats.syntax.apply._
+import cats.syntax.flatMap._
+import cats.syntax.functor._
+import cats.syntax.traverse._
 import scala.scalajs.js.annotation._
 import us.oyanglul.owlet._
 import DOM._
@@ -9,7 +12,13 @@ import DOM._
 object PlusMinusZero {
   @JSExport
   def main(args: Array[String]): Unit = {
-    println("Hello world!")
+//    for {
+//      nWeightedScores <- number("nWeightedScores", 0)
+//      scoreEntries <- (1 to nWeightedScores).traverse {
+//        i => number(s"weightedScore$i", 0)
+//      }
+//    } yield {}
+   
     val a1 = number("a1", 1)
     val a2 = number("a2", 2)
     val a3 = number("a3", 3)
