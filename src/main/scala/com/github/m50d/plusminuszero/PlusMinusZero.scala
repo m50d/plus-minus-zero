@@ -51,37 +51,41 @@ object Rank {
 object PlusMinusZero {
   @JSExport
   def main(args: Array[String]): Unit = {
-    val a2 = Var(identity): Var[List[Owlet[String]] => List[Owlet[String]]]
-    val actions = Var(identity): Var[List[Owlet[TournamentResult]] => List[Owlet[TournamentResult]]]
-    val listOfTodos =
-      actions.scan(List[Owlet[TournamentResult]]())((owlets, f) => f(owlets))
+    val toAdd = Var(None): Var[Option[TournamentResult]]
+    val listOfResults = toAdd.scan(Vector[TournamentResult]())(_ ++ _)
 
-    val notAddItem = const(Nil) _
-    val addItem = (tr: TournamentResult) => List(string("todo-item", tr.toString).map(_ => tr))
-
-    val newTodo = div(TournamentResult.tournamentResult, Var(Seq("header")))
-    val addNewTodo =
-      (button("add", notAddItem, addItem) <*> newTodo)
-        .map(t => actions := (a => (a) ::: t))
-
-    val todoUl: Owlet[List[TournamentResult]] = removableList(listOfTodos, a2)
+    val resultEntry = div(TournamentResult.tournamentResult, Var(Seq.empty))
+    val addNewResult = (button("add", false, true), resultEntry).mapN((
+      (pressed, entry) => toAdd := (if (pressed) Some(entry) else None)))
 
     val rankUi = {
       val sink = Var(())
       val el: html.Div = document.createElement("div").asInstanceOf[html.Div]
-      listOfTodos.flatMap(_.sequence.signal) foreach { results =>
+      listOfResults foreach { results =>
         while (el.lastChild != null) {
           el.removeChild(el.lastChild)
+        }
+        results foreach { result =>
+          val rel = document.createElement("div").asInstanceOf[html.Div]
+          val tn = document.createTextNode(result.toString)
+          rel.appendChild(tn)
+          val removeButton =
+            document.createElement("button").asInstanceOf[html.Button]
+          removeButton.appendChild(document.createTextNode("x"))
+          //          removeButton.onclick = _ => {
+          //            actions := (todos => todos diff List(owlet))
+          //            ul.removeChild(li)
+          //          }
+          rel.appendChild(removeButton)
+          el.appendChild(rel)
         }
         val score = Rank.ranking(results.toVector)
         val scoreTn = document.createTextNode(s"Score: $score")
         el.appendChild(scoreTn)
-        sink := ()
+        sink := (())
       }
       Owlet(List(el), sink)
     }
-    //    todoUl map {results => Rank.ranking(results.toVector)}
-
-    render(addNewTodo *> todoUl *> rankUi, "#app")
+    render(addNewResult *> rankUi, "#app")
   }
 }
