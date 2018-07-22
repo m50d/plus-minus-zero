@@ -42,7 +42,7 @@ object Rank {
     weightedAverage(results.padTo(4, TournamentResult.Zero).take(4))
 
   def ranking(results: Vector[TournamentResult]) = {
-    val sortedResults = results.sortBy(_.points)
+    val sortedResults = results.sortBy(_.points).reverse
     0.5 * partA(sortedResults) + 0.5 * partB(sortedResults)
   }
 }
