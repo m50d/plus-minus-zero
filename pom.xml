@@ -69,6 +69,7 @@
 						<initializer>com.github.m50d.plusminuszero.PlusMinusZero.main(build=${project.artifactId},stamp=${maven.build.timestamp})</initializer>
 					</linkerMainInitializerList>
 					<zincVerifyVersion>false</zincVerifyVersion>
+					<eclipseRestartEnable>false</eclipseRestartEnable>
 				</configuration>
 				<executions>
 					<execution>
@@ -79,7 +80,7 @@
 							<!-- Transfer format settings. -->
 							<goal>eclipse-format</goal>
 							<!-- Manage test application. -->
-							<goal>eclipse-restart</goal>
+<!-- 							<goal>eclipse-restart</goal> -->
 							<!-- Manage presentation compiler. -->
 							<goal>eclipse-prescomp</goal>
 							<!-- Add compilation sources. -->
@@ -139,6 +140,16 @@
 			<artifactId>owlet</artifactId>
 			<version>0.1.2</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-junit</artifactId>
+			<version>2.0.0.0</version>
 		</dependency>
 	</dependencies>
 </project>
