@@ -52,7 +52,10 @@ object PlusMinusZero {
   @JSExport
   def main(args: Array[String]): Unit = {
     val toAdd = Var(None): Var[Option[TournamentResult]]
-    val listOfResults = toAdd.scan(Vector[TournamentResult]())(_ ++ _)
+    val added = toAdd.scan(Vector[TournamentResult]())(_ ++ _)
+    val toRemove = Var(None): Var[Option[TournamentResult]]
+    val removed = toRemove.scan(Vector[TournamentResult]())(_ ++ _)
+    val listOfResults = added.combineLatestMap(removed)(_ diff _)
 
     val resultEntry = div(TournamentResult.tournamentResult, Var(Seq.empty))
     val addNewResult = (button("add", false, true), resultEntry).mapN((
@@ -70,12 +73,11 @@ object PlusMinusZero {
           val tn = document.createTextNode(result.toString)
           rel.appendChild(tn)
           val removeButton =
-            document.createElement("button").asInstanceOf[html.Button]
+          document.createElement("button").asInstanceOf[html.Button]
           removeButton.appendChild(document.createTextNode("x"))
-          //          removeButton.onclick = _ => {
-          //            actions := (todos => todos diff List(owlet))
-          //            ul.removeChild(li)
-          //          }
+          removeButton.onclick = { _ =>
+            toRemove := Some(result)
+          }
           rel.appendChild(removeButton)
           el.appendChild(rel)
         }
