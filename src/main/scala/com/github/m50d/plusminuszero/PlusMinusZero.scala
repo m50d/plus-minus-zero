@@ -57,9 +57,22 @@ object PlusMinusZero {
     val removed = toRemove.scan(Vector[TournamentResult]())(_ ++ _)
     val listOfResults = added.combineLatestMap(removed)(_ diff _)
 
+    val explanation = {
+      val el: html.Div = document.createElement("div").asInstanceOf[html.Div]
+      val text = document.createTextNode("""
+In "weight", enter MERS weight for tournaments in the past year and MERS weight/2
+for tournaments between 1 and 2 years ago.
+
+In "points", enter EMA points for your place in the tournament - 1000 for first
+and around 0 for last.
+""")
+      el.appendChild(text)
+      Owlet(List(el), Var(()))
+    }
+    
     val resultEntry = div(TournamentResult.tournamentResult, Var(Seq.empty))
-    val addNewResult = (button("add", false, true), resultEntry).mapN((
-      (pressed, entry) => toAdd := (if (pressed) Some(entry) else None)))
+    val addNewResult = (resultEntry, button("add", false, true)).mapN((
+      (entry, pressed) => toAdd := (if (pressed) Some(entry) else None)))
 
     val rankUi = {
       val sink = Var(())
@@ -82,12 +95,12 @@ object PlusMinusZero {
           el.appendChild(rel)
         }
         val score = Rank.ranking(results.toVector)
-        val scoreTn = document.createTextNode(s"Score: $score")
+        val scoreTn = document.createTextNode(s"EMA Ranking points: $score")
         el.appendChild(scoreTn)
         sink := (())
       }
       Owlet(List(el), sink)
     }
-    render(addNewResult *> rankUi, "#app")
+    render(explanation *> addNewResult *> rankUi, "#app")
   }
 }
