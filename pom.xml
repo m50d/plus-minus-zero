@@ -14,12 +14,6 @@
 		<version.scalajs.release>0.6.24</version.scalajs.release>
 		<version.scalajs.library>sjs${version.scalajs.epoch}_${version.scala.epoch}</version.scalajs.library>
 	</properties>
-	<repositories>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
-	</repositories>
 	<build>
 		<plugins>
 			<!-- Disable default compiler. -->
@@ -80,7 +74,7 @@
 							<!-- Transfer format settings. -->
 							<goal>eclipse-format</goal>
 							<!-- Manage test application. -->
-<!-- 							<goal>eclipse-restart</goal> -->
+							<!-- <goal>eclipse-restart</goal> -->
 							<!-- Manage presentation compiler. -->
 							<goal>eclipse-prescomp</goal>
 							<!-- Add compilation sources. -->
@@ -123,22 +117,21 @@
 			<version>${version.scalajs.release}</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.scala-js</groupId> -->
-		<!-- <artifactId>scalajs-dom_${version.scalajs.library}</artifactId> -->
-		<!-- <version>0.9.4</version> -->
-		<!-- <scope>provided</scope> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.scala-js</groupId>
+			<artifactId>scalajs-dom_${version.scalajs.library}</artifactId>
+			<version>0.9.4</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.lihaoyi</groupId>
 			<artifactId>scalatags_${version.scala.epoch}</artifactId>
 			<version>0.6.7</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.github.jcouyang</groupId>
+			<groupId>com.github.m50d</groupId>
 			<artifactId>owlet</artifactId>
-			<version>0.1.2</version>
+			<version>0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

@@ -12,6 +12,7 @@ import scala.scalajs.js.annotation._
 import us.oyanglul.owlet._
 import org.scalajs.dom._
 import DOM._
+import monix.reactive.Observable
 import monix.reactive.subjects.Var
 import monix.execution.Scheduler.Implicits.global
 import Function.const
@@ -67,7 +68,7 @@ In "points", enter EMA points for your place in the tournament - 1000 for first
 and around 0 for last.
 """)
       el.appendChild(text)
-      Owlet(List(el), Var(()))
+      Owlet(Observable(List(el)), Var(()))
     }
     
     val resultEntry = div(TournamentResult.tournamentResult, Var(Seq.empty))
@@ -99,7 +100,7 @@ and around 0 for last.
         el.appendChild(scoreTn)
         sink := (())
       }
-      Owlet(List(el), sink)
+      Owlet(Observable(List(el)), sink)
     }
     render(explanation *> addNewResult *> rankUi, "#app")
   }
