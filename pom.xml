@@ -129,9 +129,9 @@
 			<version>0.6.7</version>
 		</dependency>
 		<dependency>
-			<groupId>com.github.m50d</groupId>
-			<artifactId>owlet</artifactId>
-			<version>0.1-SNAPSHOT</version>
+			<groupId>us.oyanglul</groupId>
+			<artifactId>owlet_${version.scalajs.library}</artifactId>
+			<version>0.1.5</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
