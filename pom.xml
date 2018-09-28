@@ -124,11 +124,36 @@
 							<goal>register-test</goal>
 							<goal>compile-main</goal>
 							<goal>compile-test</goal>
+							<goal>scaladoc-main</goal>
+							<goal>scaladoc-test</goal>
 							<goal>scala-js-link-main</goal>
 							<goal>scala-js-link-test</goal>
 							<goal>scala-js-env-prov-webjars</goal>
 							<goal>scala-js-env-prov-nodejs</goal>
 							<goal>scala-js-env-conf-nodejs</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<!-- During release:perform, enable the "release" profile -->
+					<releaseProfiles>release</releaseProfiles>
+					<useReleaseProfile>false</useReleaseProfile>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
 						</goals>
 					</execution>
 				</executions>
