@@ -1,10 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.m50d</groupId>
 	<artifactId>plus-minus-zero</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<properties>
 		<version.scala.epoch>2.12</version.scala.epoch>
 		<version.scala.plugin.macro>2.1.1</version.scala.plugin.macro>
@@ -59,7 +57,7 @@
 		<connection>scm:git:git://github.com/m50d/plus-minus-zero.git</connection>
 		<developerConnection>scm:git:git@github.com:m50d/plus-minus-zero.git</developerConnection>
 		<url>https://github.com/m50d/plus-minus-zero/tree/master</url>
-		<tag>HEAD</tag>
+		<tag>plus-minus-zero-0.1</tag>
 	</scm>
 	<distributionManagement>
 		<repository>
