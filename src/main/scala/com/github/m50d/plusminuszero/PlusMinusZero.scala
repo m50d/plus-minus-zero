@@ -59,7 +59,7 @@ object PlusMinusZero {
     val listOfResults = added.combineLatestMap(removed)(_ diff _)
 
     val explanation = {
-      val el: html.Div = document.createElement("div").asInstanceOf[html.Div]
+      val el: html.Paragraph = document.createElement("p").asInstanceOf[html.Paragraph]
       val text = document.createTextNode("""
 In "weight", enter MERS weight for tournaments in the past year and MERS weight/2
 for tournaments between 1 and 2 years ago.
@@ -70,14 +70,15 @@ and around 0 for last.
       el.appendChild(text)
       Owlet(Observable(List(el)), Var(()))
     }
-    
-    val resultEntry = div(TournamentResult.tournamentResult, Var(Seq.empty))
+
+    val resultEntry = div(TournamentResult.tournamentResult, Var(Seq("result-entry")))
     val addNewResult = (resultEntry, button("add", false, true)).mapN((
       (entry, pressed) => toAdd := (if (pressed) Some(entry) else None)))
 
     val rankUi = {
       val sink = Var(())
       val el: html.Div = document.createElement("div").asInstanceOf[html.Div]
+      el.className = "tournament-results"
       listOfResults foreach { results =>
         while (el.lastChild != null) {
           el.removeChild(el.lastChild)
@@ -85,10 +86,11 @@ and around 0 for last.
         results foreach { result =>
           val rel = document.createElement("div").asInstanceOf[html.Div]
           val tn = document.createTextNode(result.toString)
+          rel.className = "tournament-result"
           rel.appendChild(tn)
           val removeButton =
           document.createElement("button").asInstanceOf[html.Button]
-          removeButton.appendChild(document.createTextNode("x"))
+          removeButton.appendChild(document.createTextNode("×"))
           removeButton.onclick = { _ =>
             toRemove := Some(result)
           }
