@@ -40,6 +40,7 @@ button {
 }
 
 input {
+  border: 1px solid #d0d0d0;
   padding: 0.25em;
 }
 
@@ -51,15 +52,7 @@ input {
 
 .result-entry label {
   display: block;
-  margin: 0.5em 0.25em;
-}
-
-.result-entry label:first-child {
-  margin-left: 0;
-}
-
-.result-entry label:last-child {
-  margin-right: 0;
+  margin: 0.5em 0;
 }
 
 .result-entry input {
@@ -74,6 +67,15 @@ input {
 
   .result-entry label {
     display: inline-block;
+    margin: 0.5em 0.25em;
+  }
+
+  .result-entry label:first-child {
+    margin-left: 0;
+  }
+
+  .result-entry label:last-child {
+    margin-right: 0;
   }
 }
 
