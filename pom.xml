@@ -209,8 +209,24 @@
         </dependency>
         <dependency>
             <groupId>com.softwaremill.sttp</groupId>
+            <artifactId>core_${version.scala.epoch}</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.softwaremill.sttp</groupId>
             <artifactId>core_${version.scalajs.library}</artifactId>
             <version>1.6.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>biz.enef</groupId>
+            <artifactId>slogging_${version.scala.epoch}</artifactId>
+            <version>0.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>biz.enef</groupId>
+            <artifactId>slogging_${version.scalajs.library}</artifactId>
+            <version>0.6.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

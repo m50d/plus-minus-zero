@@ -4,18 +4,26 @@ import cats.instances.future._
 import cats.instances.vector._
 import cats.syntax.apply._
 import cats.syntax.traverse._
+
 import scala.scalajs.js.annotation._
 import us.oyanglul.owlet._
 import org.scalajs.dom._
 import DOM._
+import com.softwaremill.sttp.FetchBackend
 import monix.reactive.Observable
 import monix.reactive.subjects.Var
 import monix.execution.Scheduler.Implicits.global
+import scala.concurrent.Future
+import slogging._
 
 @JSExportTopLevel("plusMinusZero.PlusMinusZero") object PlusMinusZero {
   @JSExport def main(args: Array[String]): Unit = {
+    LoggerConfig.factory = ConsoleLoggerFactory()
+
+    implicit val sttpBackend = FetchBackend()
+
     val emaId = Var(None): Var[Option[String]]
-    val emaResults = emaId mapFuture (_.toVector.flatTraverse{EMAClient.currentResultsFor(_)})
+    val emaResults = emaId mapFuture (_.toVector.flatTraverse{EMAClient.currentResultsFor[Future](_, false)})
     val toAdd = Var(None): Var[Option[TournamentResult]]
     val added = toAdd.scan(Vector[TournamentResult]())(_ ++ _)
     val combined = emaResults.combineLatestMap(added)(_ ++ _)

@@ -1,12 +1,11 @@
 package com.github.m50d.plusminuszero
 
-import monix.execution.Scheduler.Implicits.global
-import scala.concurrent.Await
-import scala.concurrent.duration._
+import com.softwaremill.sttp._
 
 object EMAClientIT {
   def main(args: Array[String]): Unit = {
-    val results = Await.result(EMAClient.currentResultsFor("11990050"), 10 seconds)
+    implicit val backend = HttpURLConnectionBackend()
+    val results = EMAClient.currentResultsFor("11990050", true)
     results foreach println
   }
 }
