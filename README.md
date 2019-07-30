@@ -7,8 +7,8 @@ An EMA rank points calculator. Temporary manually-updated demo [hosted on my blo
 ## TODO
 
  * Release to maven central / webjars CDN and have the demo source the javascript from there
- * Improve page visual design (CSS)
+ * Integrate CSS with Scala code rather than just using class attributes
  * Calculate per-tournament points from position and number of entrants
  * Temporal results (i.e. automatic application of MERS weight decay)
- * Fetching of current player stats (only if EMA offer an API)
+ * Fetch current player stats in a more robust way (ideally an EMA API)
  * Ensure the project is easy for other people to host in a license-compliant way
