@@ -168,15 +168,16 @@
             </resource>
         </resources>
     </build>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.monix</groupId>
-                <artifactId>monix_${version.scala.epoch}</artifactId>
-                <version>2.3.3</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>jcenter</id>
+            <name>jcenter</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.scala-lang</groupId>
@@ -196,25 +197,20 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.lihaoyi</groupId>
-            <artifactId>scalatags_${version.scala.epoch}</artifactId>
-            <version>0.6.7</version>
-        </dependency>
-        <dependency>
             <groupId>us.oyanglul</groupId>
             <artifactId>owlet_${version.scalajs.library}</artifactId>
             <version>0.1.5</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>fr.hmil</groupId>
-            <artifactId>roshttp_${version.scala.epoch}</artifactId>
-            <version>2.1.0</version>
+            <groupId>io.monix</groupId>
+            <artifactId>monix_${version.scala.epoch}</artifactId>
+            <version>3.0.0-RC1</version>
         </dependency>
         <dependency>
-            <groupId>io.scalajs.npm</groupId>
-            <artifactId>htmlparser2_${version.scalajs.library}</artifactId>
-            <version>3.9.2-4</version>
+            <groupId>fr.hmil</groupId>
+            <artifactId>roshttp_${version.scala.epoch}</artifactId>
+            <version>2.2.3</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
