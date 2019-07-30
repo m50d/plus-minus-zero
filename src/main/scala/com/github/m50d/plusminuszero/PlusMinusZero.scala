@@ -1,12 +1,13 @@
 package com.github.m50d.plusminuszero
 
+import cats.instances.future._
+import cats.instances.vector._
 import cats.syntax.apply._
-
+import cats.syntax.traverse._
 import scala.scalajs.js.annotation._
 import us.oyanglul.owlet._
 import org.scalajs.dom._
 import DOM._
-import fr.hmil.roshttp.{HttpRequest, Protocol}
 import monix.reactive.Observable
 import monix.reactive.subjects.Var
 import monix.execution.Scheduler.Implicits.global
@@ -14,16 +15,13 @@ import monix.execution.Scheduler.Implicits.global
 @JSExportTopLevel("plusMinusZero.PlusMinusZero") object PlusMinusZero {
   @JSExport def main(args: Array[String]): Unit = {
     val emaId = Var(None): Var[Option[String]]
-    val emaResults = emaId mapFuture (
-      id ⇒ HttpRequest(s"http://mahjong-europe.org/ranking/Players/$id.html").send()) map {
-      response ⇒
-        val responseDocument = new DOMParser().parseFromString(response.body, response.headers("Content-Type"))
-    }
+    val emaResults = emaId mapFuture (_.toVector.flatTraverse{EMAClient.currentResultsFor(_)})
     val toAdd = Var(None): Var[Option[TournamentResult]]
     val added = toAdd.scan(Vector[TournamentResult]())(_ ++ _)
+    val combined = emaResults.combineLatestMap(added)(_ ++ _)
     val toRemove = Var(None): Var[Option[TournamentResult]]
     val removed = toRemove.scan(Vector[TournamentResult]())(_ ++ _)
-    val listOfResults = added.combineLatestMap(removed)(_ diff _)
+    val listOfResults = combined.combineLatestMap(removed)(_ diff _)
 
     val explanation = {
       val el: html.Paragraph = document.createElement("p").asInstanceOf[html.Paragraph]
@@ -75,6 +73,6 @@ and around 0 for last.
       }
       Owlet(Observable(List(el)), sink)
     }
-    render(explanation *> importEma *> addNewResult *> rankUi, "#app")
+    render(importEma *> explanation *> addNewResult *> rankUi, "#app")
   }
 }

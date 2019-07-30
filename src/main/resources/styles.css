@@ -50,22 +50,22 @@ input {
   }
 }
 
-.result-entry label {
+label {
   display: block;
   margin: 0.5em 0;
 }
 
-.result-entry input {
+input {
   width: 100%;
 }
 
 @media (min-width: 575px) {
-  .result-entry input {
+  input {
     width: 200px;
     margin-left: 0.25em;
   }
 
-  .result-entry label {
+  label {
     display: inline-block;
     margin: 0.5em 0.25em;
   }
