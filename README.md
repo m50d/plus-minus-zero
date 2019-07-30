@@ -1,6 +1,6 @@
 # plus-minus-zero
 
-An EMA rank points calculator. Temporary manually-updated demo [hosted on my blog](http://m50d.github.io/ema)
+An EMA rank points calculator. Deployed at [emarank.riichi.london](https://emarank.riichi.london)
 
 [![Build Status](https://travis-ci.org/m50d/plus-minus-zero.svg?branch=master)](https://travis-ci.org/m50d/plus-minus-zero)
 
