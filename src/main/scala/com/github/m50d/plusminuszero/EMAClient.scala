@@ -9,7 +9,8 @@ object EMAClient {
   implicit val sttpBackend = FetchBackend()
 
   def currentResultsFor(id: String)(implicit scheduler: Scheduler) =
-    sttp.get(Uri(s"http://mahjong-europe.org/ranking/Players/$id.html")).send() map {
+    sttp.get(Uri("cors-anywhere.herokuapp.com").path(
+      "http:", "", "mahjong-europe.org", "ranking", "Players", s"$id.html")).send() map {
       response ⇒
         val document = new DOMParser().parseFromString(response.body.right.get, response.header("Content-Type").get)
         val resultTable = document.getElementsByTagName("h3").find {
