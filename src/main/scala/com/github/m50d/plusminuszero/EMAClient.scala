@@ -10,7 +10,7 @@ import slogging.StrictLogging
 
 object EMAClient extends StrictLogging {
   def currentResultsFor[R[_] : Functor](id: String, addXRequestedWith: Boolean)(implicit backend: SttpBackend[R, _]) = {
-    val request = sttp.get(Uri("cors-anywhere.herokuapp.com").path(
+    val request = sttp.get(Uri("https", "cors-anywhere.herokuapp.com").path(
       "http:", "", "mahjong-europe.org", "ranking", "Players", s"$id.html")
     )
     val requestWithHeader = if (addXRequestedWith) request.header("X-Requested-With", "XMLHttpRequest") else request
