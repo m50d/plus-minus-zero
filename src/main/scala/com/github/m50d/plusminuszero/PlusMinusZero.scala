@@ -1,13 +1,6 @@
 package com.github.m50d.plusminuszero
 
-import cats.instances.double._
-import cats.instances.list._
-import cats.instances.vector._
 import cats.syntax.apply._
-import cats.syntax.flatMap._
-import cats.syntax.foldable._
-import cats.syntax.functor._
-import cats.syntax.traverse._
 import scala.scalajs.js.annotation._
 import us.oyanglul.owlet._
 import org.scalajs.dom._
@@ -15,38 +8,6 @@ import DOM._
 import monix.reactive.Observable
 import monix.reactive.subjects.Var
 import monix.execution.Scheduler.Implicits.global
-import Function.const
-import cats.Foldable
-
-case class TournamentResult(weight: Double, points: Int)
-
-object TournamentResult {
-  def weight: Owlet[Double] = label(number("weight", 0), "Weight")
-  def points: Owlet[Int] = label(number("points", 0), "Points").map(_.toInt)
-  def tournamentResult: Owlet[TournamentResult] =
-    (weight, points).mapN(apply)
-
-  val Zero = TournamentResult(1, 0)
-}
-
-object Rank {
-  private def weightedAverage[F[_]: Foldable](results: F[TournamentResult]) =
-    (results.foldMap(r => r.points * r.weight)) / results.foldMap(_.weight)
-
-  def partA(results: Vector[TournamentResult]) = {
-    val (best5, rest) = results.padTo(5, TournamentResult.Zero).splitAt(5)
-    val toDrop = rest.size / 5
-    weightedAverage(best5 ++ rest.dropRight(toDrop))
-  }
-
-  def partB(results: Vector[TournamentResult]) =
-    weightedAverage(results.padTo(4, TournamentResult.Zero).take(4))
-
-  def ranking(results: Vector[TournamentResult]) = {
-    val sortedResults = results.sortBy(_.points).reverse
-    0.5 * partA(sortedResults) + 0.5 * partB(sortedResults)
-  }
-}
 
 @JSExportTopLevel("plusMinusZero.PlusMinusZero")
 object PlusMinusZero {
