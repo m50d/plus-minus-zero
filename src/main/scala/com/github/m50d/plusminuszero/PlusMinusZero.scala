@@ -23,7 +23,8 @@ import slogging._
     implicit val sttpBackend = FetchBackend()
 
     val emaId = Var(None): Var[Option[String]]
-    val emaResults = emaId mapFuture (_.toVector.flatTraverse{EMAClient.currentResultsFor[Future](_, false)})
+    val latestEmaId = emaId.scan[Option[String]](None)((prev, cur) ⇒ cur orElse prev)
+    val emaResults = latestEmaId mapFuture (_.toVector.flatTraverse { EMAClient.currentResultsFor[Future](_, false) })
     val toAdd = Var(None): Var[Option[TournamentResult]]
     val added = toAdd.scan(Vector[TournamentResult]())(_ ++ _)
     val combined = emaResults.combineLatestMap(added)(_ ++ _)
@@ -46,7 +47,7 @@ and around 0 for last.
     }
     val emaIdEntry = label(string("emaid", ""), "EMA ID")
     val importEma = (emaIdEntry, button("import", false, true)).mapN((id, pressed) =>
-      emaId := (if(pressed) Some(id) else None)
+      emaId := (if (pressed) Some(id) else None)
     )
 
     val resultEntry = div(TournamentResult.tournamentResult, Var(Seq("result-entry")))
