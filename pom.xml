@@ -5,6 +5,7 @@
     <artifactId>plus-minus-zero</artifactId>
     <version>0.2-SNAPSHOT</version>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.scala.epoch>2.12</version.scala.epoch>
         <version.scala.plugin.macro>2.1.1</version.scala.plugin.macro>
         <version.scala.release>2.12.6</version.scala.release>
