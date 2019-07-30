@@ -211,6 +211,11 @@
             <version>2.1.0</version>
         </dependency>
         <dependency>
+            <groupId>io.scalajs.npm</groupId>
+            <artifactId>htmlparser2_${version.scalajs.library}</artifactId>
+            <version>3.9.2-4</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
